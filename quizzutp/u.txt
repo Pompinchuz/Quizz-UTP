@@ -1,0 +1,2 @@
+Version de react utilizada: React versión 19.1.1.
+BD: MYSQL
