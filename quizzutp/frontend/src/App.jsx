@@ -1,30 +1,83 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import QuizList from "./pages/QuizList";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Logout from "./components/Logout";
-import Quiz from "./pages/Quiz";
+// src/App.jsx
+import { useState } from 'react';
+import Login from './components/Login';
+import Register from './components/Register';
+import Dashboard from './pages/Dashboard';
+import Quiz from './pages/Quiz';
+import AdminDashboard from './pages/AdminDashboard';
+import './App.css';
 
 function App() {
-  const usuarioId = localStorage.getItem("usuarioId");
+  const [currentView, setCurrentView] = useState('login');
+  const [user, setUser] = useState(null);
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+    // Si el username es "admin", redirigir al panel de administración
+    if (userData.username === 'admin') {
+      setCurrentView('admin');
+    } else {
+      setCurrentView('dashboard');
+    }
+  };
+
+  const handleRegister = (userData) => {
+    setUser(userData);
+    setCurrentView('dashboard');
+  };
+
+  const handleStartQuiz = () => {
+    setCurrentView('quiz');
+  };
+
+  const handleFinishQuiz = () => {
+    setCurrentView('dashboard');
+    // Recargar datos del usuario
+    window.location.reload();
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setCurrentView('login');
+  };
 
   return (
-    <Router>
-      <nav>
-        <Link to="/">Inicio</Link>{" "}
-        {!usuarioId && <Link to="/login">Login</Link>}{" "}
-        {!usuarioId && <Link to="/register">Registro</Link>}{" "}
-        {usuarioId && <Link to="/quiz">Quiz</Link>}{" "}
-        {usuarioId && <Link to="/logout">Cerrar Sesión</Link>}
-      </nav>
-      <Routes>
-        <Route path="/" element={<QuizList />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/quiz" element={<Quiz />} />
-      </Routes>
-    </Router>
+    <div className="app">
+      {currentView === 'login' && (
+        <Login
+          onLogin={handleLogin}
+          onSwitchToRegister={() => setCurrentView('register')}
+        />
+      )}
+      
+      {currentView === 'register' && (
+        <Register
+          onRegister={handleRegister}
+          onSwitchToLogin={() => setCurrentView('login')}
+        />
+      )}
+      
+      {currentView === 'dashboard' && user && (
+        <Dashboard
+          user={user}
+          onStartQuiz={handleStartQuiz}
+          onLogout={handleLogout}
+        />
+      )}
+      
+      {currentView === 'quiz' && user && (
+        <Quiz
+          user={user}
+          onFinish={handleFinishQuiz}
+        />
+      )}
+      
+      {currentView === 'admin' && user && (
+        <AdminDashboard
+          onLogout={handleLogout}
+        />
+      )}
+    </div>
   );
 }
 
