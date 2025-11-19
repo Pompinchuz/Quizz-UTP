@@ -1,15 +1,19 @@
 // src/pages/Dashboard.jsx
-import { useState } from 'react';
 import './Dashboard.css';
 
-export default function Dashboard({ user, onStartQuiz, onLogout }) {
+export default function Dashboard({ user, onStartQuiz, onViewReports, onLogout }) {
   return (
     <div className="dashboard-container">
       <nav className="dashboard-nav">
         <h1 className="nav-title">Quiz UTP</h1>
-        <button onClick={onLogout} className="logout-button">
-          Cerrar Sesión
-        </button>
+        <div className="nav-actions">
+          <button onClick={onViewReports} className="reports-button">
+            📊 Mis Resultados
+          </button>
+          <button onClick={onLogout} className="logout-button">
+            Cerrar Sesión
+          </button>
+        </div>
       </nav>
       
       <div className="dashboard-content">

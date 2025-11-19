@@ -4,7 +4,7 @@ import { adminService } from '../services/api';
 import QuestionForm from '../components/QuestionForm';
 import './AdminDashboard.css';
 
-export default function AdminDashboard({ onLogout }) {
+export default function AdminDashboard({ user, onViewReports, onLogout }) {
   const [questions, setQuestions] = useState([]);
   const [stats, setStats] = useState({ totalQuestions: 0 });
   const [showForm, setShowForm] = useState(false);
@@ -26,7 +26,7 @@ export default function AdminDashboard({ onLogout }) {
       setQuestions(questionsData);
       setStats(statsData);
     } catch (error) {
-      console.error('Error al cargar datos uwu:', error);
+      console.error('Error al cargar datos:', error);
     } finally {
       setLoading(false);
     }

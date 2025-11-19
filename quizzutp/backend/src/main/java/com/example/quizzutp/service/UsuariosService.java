@@ -20,6 +20,12 @@ public class UsuariosService {
         if (usuariosRepository.existsByEmail(usuario.getEmail())) {
             throw new RuntimeException("El email ya está registrado");
         }
+        
+        // Si no se especifica rol, asignar ESTUDIANTE por defecto
+        if (usuario.getRole() == null) {
+            usuario.setRole(Usuarios.Role.ESTUDIANTE);
+        }
+        
         return usuariosRepository.save(usuario);
     }
     
@@ -29,6 +35,11 @@ public class UsuariosService {
             return usuario.get();
         }
         throw new RuntimeException("Credenciales inválidas");
+    }
+    
+    public Usuarios findByUsername(String username) {
+        return usuariosRepository.findByUsername(username)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
     
     public Usuarios updateScore(Long userId, Integer score) {

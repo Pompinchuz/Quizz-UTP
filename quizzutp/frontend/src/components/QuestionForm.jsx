@@ -43,6 +43,7 @@ export default function QuestionForm({ question, onSubmit, onCancel }) {
       }
       onSubmit();
     } catch (err) {
+       console.error(err); 
       setError('Error al guardar la pregunta');
     } finally {
       setLoading(false);

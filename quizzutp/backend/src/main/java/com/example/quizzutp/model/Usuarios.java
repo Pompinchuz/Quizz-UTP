@@ -25,4 +25,13 @@ public class Usuarios {
     private String email;
     
     private Integer bestScore = 0;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.ESTUDIANTE;
+    
+    public enum Role {
+        ESTUDIANTE,
+        ADMINISTRADOR
+    }
 }

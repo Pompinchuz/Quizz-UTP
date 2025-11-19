@@ -1,6 +1,6 @@
 // src/pages/Quiz.jsx
 import { useState, useEffect } from 'react';
-import { questionService, authService } from '../services/api';
+import { questionService, authService, reportService } from '../services/api';
 import './Quiz.css';
 
 export default function Quiz({ user, onFinish }) {
@@ -51,10 +51,23 @@ export default function Quiz({ user, onFinish }) {
 
   const finishQuiz = async (finalScore) => {
     setShowResult(true);
+    
+    const correctAnswers = Math.floor(finalScore / 10);
+    const incorrectAnswers = questions.length - correctAnswers;
+    
     try {
+      // Guardar resultado en la base de datos
+      await reportService.saveResult({
+        score: finalScore,
+        totalQuestions: questions.length,
+        correctAnswers: correctAnswers,
+        incorrectAnswers: incorrectAnswers
+      });
+      
+      // Actualizar mejor puntuación
       await authService.updateScore(user.id, finalScore);
     } catch (error) {
-      console.error('Error al actualizar puntuación:', error);
+      console.error('Error al guardar resultado:', error);
     }
   };
 
