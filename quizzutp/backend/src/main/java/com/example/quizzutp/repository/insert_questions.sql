@@ -1,5 +1,8 @@
--- Script para insertar preguntas de programación
-USE quizzutp_db;
+-- Script para insertar preguntas de programación en PostgreSQL
+-- Nota: Las tablas se crean automáticamente con spring.jpa.hibernate.ddl-auto=update
+
+-- Limpiar datos existentes (opcional)
+-- TRUNCATE TABLE questions RESTART IDENTITY CASCADE;
 
 INSERT INTO questions (question_text, option1, option2, option3, option4, correct_answer, difficulty) VALUES
 ('¿Qué significa HTML?', 'Hyper Text Markup Language', 'High Tech Modern Language', 'Home Tool Markup Language', 'Hyperlinks and Text Markup Language', 1, 'facil'),
@@ -16,4 +19,9 @@ INSERT INTO questions (question_text, option1, option2, option3, option4, correc
 ('¿Qué es Git?', 'Un lenguaje de programación', 'Un sistema de control de versiones', 'Una base de datos', 'Un editor de código', 2, 'facil'),
 ('¿Qué es la recursión?', 'Un bucle infinito', 'Una función que se llama a sí misma', 'Un tipo de variable', 'Un método de ordenamiento', 2, 'dificil'),
 ('¿Cuál es la complejidad temporal de la búsqueda binaria?', 'O(n)', 'O(log n)', 'O(n²)', 'O(1)', 2, 'dificil'),
-('¿Qué significa API?', 'Application Programming Interface', 'Advanced Programming Integration', 'Automated Program Interaction', 'Application Process Integration', 1, 'medio');
+('¿Qué significa API?', 'Application Programming Interface', 'Advanced Programming Integration', 'Automated Program Interaction', 'Application Process Integration', 1, 'medio'),
+('¿Qué es REST?', 'Un lenguaje de programación', 'Un estilo arquitectónico para APIs', 'Una base de datos', 'Un framework frontend', 2, 'medio'),
+('¿Cuál es la diferencia entre GET y POST?', 'No hay diferencia', 'GET obtiene datos, POST envía datos', 'POST es más rápido', 'GET es para imágenes', 2, 'medio'),
+('¿Qué es JSON?', 'Un lenguaje de programación', 'Un formato de intercambio de datos', 'Una base de datos', 'Un servidor web', 2, 'facil'),
+('¿Qué comando se usa para clonar un repositorio Git?', 'git copy', 'git clone', 'git download', 'git pull', 2, 'facil'),
+('¿Qué es un bucle for?', 'Una función', 'Una estructura de control que repite código', 'Una variable', 'Un operador', 2, 'facil');
